@@ -55,6 +55,10 @@ var modDuel = (function(){
 		} else if (!parseInt(params[1], 10) || parseInt(params[1], 10) < 1) {
 
 			return apiSay(`${from}, you have to bet more than 0 ${apiGetPointsUnit()}!`);
+
+		} else if (from == params[0]) {
+
+			return apiSay(`${from}, you can't challenge yourself!`);
 		}
 
 		// Command is valid, let's proceed
