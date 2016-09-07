@@ -11,7 +11,7 @@ var modDuel = (function(){
 	// Add the commands
 	apiAddCmd("duel", "modDuel.duelCmd", "all", "Send a duel challenge to a user. Usage: !duel [username] [amount] \n Use \"!cancelduel [username]\" to cancel a duel challenge made by you to a user and \"!acceptduel [username]\" or \"!rejectduel [username]\" to either accept or reject a duel challenge from a user.");
 	apiAddCmd("cancelduel", "modDuel.cancelduelCmd", "all", "Cancel a duel challenge made by you to a user. Usage: !cancelduel [username]");
-	apiAddCmd("cancelallduels", "modDuel.cancelAllDuelsCmd", "all", "Cancel all duel challenges made by you.");
+	apiAddCmd("cancelallduels", "modDuel.cancelallduelsCmd", "all", "Cancel all duel challenges made by you.");
 	apiAddCmd("acceptduel", "modDuel.acceptduelCmd", "all", "Accept duel challenge from a user. Usage: !acceptduel [username]");
 	apiAddCmd("rejectduel", "modDuel.rejectduelCmd", "all", "Reject a duel challenge from a user. Usage: !rejectduel [username]");
 
@@ -105,14 +105,16 @@ var modDuel = (function(){
 
 	var _cancelallduelsCmd = function (params, from, mod, subscriber) {
 
-
-		if (!_duels.hasOwnProperty(from) || Object.keys(_duels[from]).length < 1) {
+		if (!_duels.hasOwnProperty(from)) {
 
 			return apiSay(`${from}, you have no active challenges.`);
 
 		} else {
 
-			delete _duels[from];
+			for (var duel in _duels[from]) {
+
+				delete _duels[from][duel];
+			}
 
 			return apiSay(`${from}, all your challenges have been successfully cancelled.`);
 		}
